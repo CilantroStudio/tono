@@ -2,10 +2,12 @@ import typer
 from typing_extensions import Annotated
 from typing import Optional
 from pathlib import Path
-from agent.config import TEST_DIR
-from agent.logging import console
+
+from tono.lib.logging import console
 from rich.panel import Panel
 from rich.markdown import Markdown
+
+TEST_DIR = "tests"
 
 
 def init(

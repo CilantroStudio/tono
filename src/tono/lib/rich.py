@@ -1,4 +1,4 @@
-from agent.logging import console
+from tono.lib.logging import console
 from rich.panel import Panel
 
 

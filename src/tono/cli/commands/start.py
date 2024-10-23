@@ -2,9 +2,9 @@ import os
 import typer
 from typing_extensions import Annotated
 from rich.console import Console
-from agent.completions import agent
-from agent.logging import logger
-from agent.config import TEST_DIR, read_config
+from tono.completions import agent
+from tono.lib.logging import logger
+from tono.config import TEST_DIR, read_config
 
 err_console = Console(stderr=True)
 
