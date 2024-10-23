@@ -7,20 +7,22 @@ from rich.theme import Theme
 console = Console(
     theme=Theme(
         {
-            "logging.level.info": "medium_spring_green",
-            "logging.level.debug": "cadet_blue",
-            "logging.level.warning": "yellow1",
-            "logging.level.error": "indian_red1",
+            "logging.level.info": "cornflower_blue",
+            "logging.level.debug": "dark_sea_green4",
+            "logging.level.warning": "gold3",
+            "logging.level.error": "red1",
         }
     ),
 )
 
 FORMAT = "%(message)s"
+LOG_LEVEL = os.environ.get("LOG_LEVEL", logging.INFO)
+
 logging.basicConfig(
-    level=os.environ.get("LOG_LEVEL", "INFO"),
     format=FORMAT,
     datefmt="[%X]",
     handlers=[RichHandler(markup=True, console=console, rich_tracebacks=True)],
 )
 
 logger = logging.getLogger("tono")
+logger.setLevel(LOG_LEVEL)

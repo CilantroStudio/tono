@@ -1,12 +1,15 @@
+import typer
 from tono.lib.logging import console
 from rich.panel import Panel
 
 
-def print_in_question_panel(text: str, title: str = "Question?"):
+def get_input_panel(
+    text: str, title: str = "Question?", response_text: str = "Response"
+):
     console.print("\n")
     console.print(
         Panel(
-            text,
+            str(text),
             title=title,
             padding=(1, 1),
             highlight=True,
@@ -14,13 +17,14 @@ def print_in_question_panel(text: str, title: str = "Question?"):
         )
     )
     console.print("\n")
+    return typer.prompt(response_text)
 
 
 def print_in_panel(text: str, title: str = "Output"):
     console.print("\n")
     console.print(
         Panel(
-            text,
+            str(text),
             title=title,
             padding=(1, 1),
             highlight=True,

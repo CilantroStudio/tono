@@ -1,13 +1,27 @@
+import os
 import openai
 from tono import Agent, OpenAICompletionClient
-from tono.tools import http_request, write_code_to_file
+from tono.tools import http_request, write_to_file
 
-# Instantiate an openai client using our adapter
-client = OpenAICompletionClient(openai.Client(api_key="abc"))
+openai_client = openai.OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY"),
+)
+client = OpenAICompletionClient(client=openai_client)
+
 # agent creation
-Agent.group_chat = ["some general messages"]
-agent = Agent(client, tools=[write_code_to_file, http_request])
+agent = Agent(
+    name="code-agent",
+    client=client,
+    tools=[write_to_file, http_request],
+    context=[
+        {
+            "role": "assistant",
+            "content": "You are a helpful assistant that can visit websites by making http requests and write text to files. Use the supplied tools to complete the objective.",
+        }
+    ],
+)
+
 # run the agent
 agent.start(
-    "Use google to find the top 10 news items for today and write a summary for me in markdown."
+    objective="Check what is trending by visiting a popular news website, and write a summary of the top 10 news articles to a markdown file."
 )

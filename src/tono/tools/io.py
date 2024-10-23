@@ -1,13 +1,11 @@
-import typer
-from tono.lib import logger, print_in_question_panel
-from typing import TypedDict, NotRequired
+from tono.lib import logger, get_input_panel
+from typing import TypedDict
 from pathlib import Path
 
 
 class TWriteCodeToFile(TypedDict):
     code: str
     file_name: str
-    language: NotRequired[str]
 
 
 def write_code_to_file(**kwargs: TWriteCodeToFile):
@@ -36,6 +34,33 @@ def write_code_to_file(**kwargs: TWriteCodeToFile):
         return f"Code written to {file_name}"
 
 
+class TWriteToFile(TypedDict):
+    text: str
+    file_name: str
+
+
+def write_to_file(**kwargs: TWriteToFile) -> str:
+    """Writes the provided text to a file in the current working directory. We are using the w+ mode to write the file.
+
+    :param text: The text to write to the file.
+    :param file_name: The name of the file to write the text to. Including the file extension.
+
+    :return: A message indicating the status of the operation.
+    :rtype: str
+    """
+    print("write_to_file called")
+    text = kwargs.get("text", None)
+    file_name = kwargs.get("file_name", "created_by_agent.txt")
+
+    if not text:
+        return logger.error("text or file_name not provided to write to file.")
+
+    logger.info(f"Writing text to file {file_name}")
+    with open(Path(file_name), "w+") as f:
+        f.write(text)
+        return f"Text written to {file_name}"
+
+
 class TGetUserInput(TypedDict):
     question: str
 
@@ -53,7 +78,5 @@ def get_user_input(**kwargs: TGetUserInput) -> str:
     if not question:
         return logger.error("No question provided to get user input for.")
 
-    print_in_question_panel(question)
-    response = typer.prompt("Response")
-
+    response = get_input_panel(question, title="Question?", response_text="Response")
     return response

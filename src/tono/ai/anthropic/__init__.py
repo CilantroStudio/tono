@@ -30,3 +30,12 @@ class AnthropicCompletionClient(CompletionClient):
         )
 
         return response
+
+    def get_tool_calls(self, response: str) -> list:
+        return response.choices[0].message.tool_calls
+
+    def get_response_text(self, response: str) -> str:
+        return response.choices[0].message.content
+
+    def format_message(self, message: str, role: str) -> dict:
+        return {"role": role, "content": message}

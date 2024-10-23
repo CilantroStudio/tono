@@ -102,8 +102,6 @@ def parse_docstring(func: Callable, formatter: ToolFormatter):
         for param in params:
             if doc_param.arg_name == param["arg_name"]:
                 param["description"] = doc_param.description
-                if doc_param.type_name:
-                    param["type_name"] = doc_param.type_name
 
     structured_docstring = StructuredDocstring(
         **{
