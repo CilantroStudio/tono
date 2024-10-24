@@ -2,7 +2,7 @@ import json
 import openai
 from typing import Any, Literal
 from tono.base import ToolFormatter, CompletionClient
-from tono.lib import print_in_panel
+from tono.lib import print_in_panel, logger
 
 
 class OpenAIToolFormatter(ToolFormatter):
@@ -42,19 +42,17 @@ class OpenAICompletionClient(CompletionClient):
     def __init__(
         self,
         client: openai.OpenAI,
-        temperature: float = 0.3,
         model: str = "gpt-4o",
+        temperature: float = 0.3,
         **kwargs,
     ):
         self.client = client
-        self.temperature = temperature
         self.model = model
+        self.temperature = temperature
         self.kwargs = kwargs
 
     @property
     def tool_formatter(self) -> ToolFormatter:
-        # TODO: Think about if this should be written differently
-        # TODO: Should this just be a function?
         return OpenAIToolFormatter()
 
     def generate_completion(
@@ -72,34 +70,40 @@ class OpenAICompletionClient(CompletionClient):
             temperature=self.temperature,
             **merged_kwargs,
         )
-        self.log_completion(response.to_json())
-        message = self.get_response_text(response)
-        tool_calls = self.get_tool_calls(response)
-        if tool_calls is None:
-            tool_calls = []
+        res_json = response.to_json()
+        message = self.get_response_text(res_json)
+        tool_calls = self.get_tool_calls(res_json)
+
+        self.log_completion(res_json)
+
         return response, message, tool_calls
 
-    def get_tool_calls(self, response: Any) -> list:
-        return response.choices[0].message.tool_calls
+    def get_tool_calls(self, response: str) -> list:
+        try:
+            tool_calls = json.loads(response)["choices"][0]["message"].get(
+                "tool_calls", None
+            )
+            if tool_calls is None:
+                return []
+            return tool_calls
+        except Exception as e:
+            logger.debug(f"Error getting tool calls: {e}")
+            return []
 
-    def get_response_text(self, response: Any) -> str:
-        return response.choices[0].message.content
+    def get_tool_details(self, tool: Any) -> tuple:
+        name = tool["function"]["name"]
+        kwargs = json.loads(tool["function"]["arguments"])
+        return name, kwargs
+
+    def get_response_text(self, response: str) -> str:
+        return json.loads(response)["choices"][0]["message"]["content"]
 
     def format_message(self, message: str, role=Literal["user", "assistant"]) -> dict:
         return {"role": role, "content": str(message)}
 
     def log_completion(self, response: str):
-        # try to get ai message content
-        try:
-            content = json.loads(response)["choices"][0]["message"]["content"]
-        except KeyError:
-            content = None
-
-        # try to get tool function calls
-        try:
-            tool_calls = json.loads(response)["choices"][0]["message"]["tool_calls"]
-        except KeyError:
-            tool_calls = None
+        content = self.get_response_text(response)
+        tool_calls = self.get_tool_calls(response)
 
         # log info in a panel
         if content:

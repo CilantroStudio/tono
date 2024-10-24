@@ -1,16 +1,16 @@
 import os
-import openai
-from tono import Agent, OpenAICompletionClient
+import anthropic
+from tono import Agent, AnthropicCompletionClient
 from tono.tools import http_request, write_to_file
 
-openai_client = openai.OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),
+anthropic_client = anthropic.Anthropic(
+    api_key=os.environ.get("ANTHROPIC_API_KEY"),
 )
-client = OpenAICompletionClient(client=openai_client)
+client = AnthropicCompletionClient(client=anthropic_client)
 
 # agent creation
 agent = Agent(
-    name="code-agent",
+    name="claude-agent",
     client=client,
     tools=[write_to_file, http_request],
     context=[

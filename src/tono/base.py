@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Any
 
 
 class ToolFormatter(ABC):
@@ -18,6 +19,10 @@ class CompletionClient(ABC):
 
     @abstractmethod
     def get_tool_calls(self, response: str) -> list:
+        pass
+
+    @abstractmethod
+    def get_tool_details(self, tool: Any) -> tuple:
         pass
 
     @abstractmethod

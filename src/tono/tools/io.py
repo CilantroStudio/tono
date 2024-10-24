@@ -48,9 +48,9 @@ def write_to_file(**kwargs: TWriteToFile) -> str:
     :return: A message indicating the status of the operation.
     :rtype: str
     """
-    print("write_to_file called")
     text = kwargs.get("text", None)
     file_name = kwargs.get("file_name", "created_by_agent.txt")
+    logger.debug(f"write_to_file was called with {text=} and {file_name=}")
 
     if not text:
         return logger.error("text or file_name not provided to write to file.")
