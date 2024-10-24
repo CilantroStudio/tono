@@ -1,5 +1,11 @@
 # Tono
 
+[![image](https://img.shields.io/pypi/v/tono-ai.svg)](https://pypi.python.org/pypi/tono-ai)
+![GitHub License](https://img.shields.io/github/license/CilantroStudio/tono)
+[![Build](https://github.com/CilantroStudio/tono/actions/workflows/build.yaml/badge.svg)](https://github.com/CilantroStudio/tono/actions/workflows/build.yaml)
+[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?logo=discord&logoColor=white)](https://discord.gg/954vZeZ4)
+
+
 Tono is a framework for building autonomous AI agents. 
 
 ## Features
@@ -22,14 +28,13 @@ pip install tono-ai
 Here is a simple example of how to use Tono to build an autonomous AI agent:
 
 ```python
+import openai
 from tono import Agent, OpenAICompletionClient
 from tono.tools import http_request, write_to_file
 
 
-
 openai_client = openai.OpenAI(api_key="your-api-key")
 client = OpenAICompletionClient(client=openai_client)
-
 
 agent = Agent(
     name="gpt-agent",
