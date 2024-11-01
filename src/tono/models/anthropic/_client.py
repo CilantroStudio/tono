@@ -1,40 +1,21 @@
 import json
-import anthropic
+import sys
 from typing import Any, Literal
-from tono.base import ToolFormatter, CompletionClient
+from tono.lib.base import TonoToolFormatter, TonoCompletionClient
 from tono.lib import print_in_panel, logger
+from tono.models.anthropic._formatter import ToolFormatter
+from rich import print as rich_print
+
+try:
+    import anthropic
+except ImportError:
+    rich_print(
+        r"Please install 'tono-ai\[anthropic]' or 'tono-ai\[all]' to use the Anthropic models."
+    )
+    raise sys.exit(1)
 
 
-class AnthropicToolFormatter(ToolFormatter):
-    def format(self, parsed_doc):
-        tool = {
-            "name": parsed_doc.name,
-            "description": f"{parsed_doc.short_description} {parsed_doc.long_description}",
-        }
-
-        if parsed_doc.params:
-            tool["input_schema"] = {
-                "type": "object",
-                "properties": {
-                    param.arg_name: {
-                        "type": param.type_name,
-                        "description": param.description,
-                    }
-                    for param in parsed_doc.params
-                },
-                "required": parsed_doc.required,
-            }
-
-            for param in parsed_doc.params:
-                if param.enum:
-                    tool["input_schema"]["properties"][param.arg_name]["enum"] = (
-                        param.enum
-                    )
-
-        return tool
-
-
-class AnthropicCompletionClient(CompletionClient):
+class CompletionClient(TonoCompletionClient):
     def __init__(
         self,
         client: anthropic.Anthropic,
@@ -50,8 +31,8 @@ class AnthropicCompletionClient(CompletionClient):
         self.kwargs = kwargs
 
     @property
-    def tool_formatter(self) -> ToolFormatter:
-        return AnthropicToolFormatter()
+    def tool_formatter(self) -> TonoToolFormatter:
+        return ToolFormatter()
 
     def generate_completion(
         self,

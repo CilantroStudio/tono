@@ -1,44 +1,21 @@
+import sys
 import json
-import openai
 from typing import Any, Literal
-from tono.base import ToolFormatter, CompletionClient
 from tono.lib import print_in_panel, logger
+from tono.lib.base import TonoToolFormatter, TonoCompletionClient
+from tono.models.openai._formatter import ToolFormatter
+from rich import print as rich_print
+
+try:
+    import openai
+except ImportError:
+    rich_print(
+        r"Please install 'tono-ai\[openai]' or 'tono-ai\[all]' to use the OpenAI models."
+    )
+    raise sys.exit(1)
 
 
-class OpenAIToolFormatter(ToolFormatter):
-    def format(self, parsed_doc):
-        tool = {
-            "type": "function",
-            "function": {
-                "name": parsed_doc.name,
-                "description": f"{parsed_doc.short_description} {parsed_doc.long_description}",
-            },
-        }
-
-        if parsed_doc.params:
-            tool["function"]["parameters"] = {
-                "type": "object",
-                "properties": {
-                    param.arg_name: {
-                        "type": param.type_name,
-                        "description": param.description,
-                    }
-                    for param in parsed_doc.params
-                },
-                "required": parsed_doc.required,
-                "additionalProperties": False,
-            }
-
-            for param in parsed_doc.params:
-                if param.enum:
-                    tool["function"]["parameters"]["properties"][param.arg_name][
-                        "enum"
-                    ] = param.enum
-
-        return tool
-
-
-class OpenAICompletionClient(CompletionClient):
+class CompletionClient(TonoCompletionClient):
     def __init__(
         self,
         client: openai.OpenAI,
@@ -52,8 +29,8 @@ class OpenAICompletionClient(CompletionClient):
         self.kwargs = kwargs
 
     @property
-    def tool_formatter(self) -> ToolFormatter:
-        return OpenAIToolFormatter()
+    def tool_formatter(self) -> TonoToolFormatter:
+        return ToolFormatter()
 
     def generate_completion(
         self,

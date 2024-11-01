@@ -2,15 +2,15 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 
-class ToolFormatter(ABC):
+class TonoToolFormatter(ABC):
     @abstractmethod
     def format(self, parsed_doc) -> dict:
         pass
 
 
-class CompletionClient(ABC):
+class TonoCompletionClient(ABC):
     @property
-    def tool_formatter(self) -> ToolFormatter:
+    def tool_formatter(self) -> TonoToolFormatter:
         pass
 
     @abstractmethod

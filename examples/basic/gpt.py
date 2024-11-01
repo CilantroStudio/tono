@@ -1,12 +1,13 @@
 import os
 import openai
-from tono import Agent, OpenAICompletionClient
+from tono import Agent
+from tono.models.openai import CompletionClient
 from tono.tools import http_request, write_to_file
 
 openai_client = openai.OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
 )
-client = OpenAICompletionClient(client=openai_client)
+client = CompletionClient(client=openai_client)
 
 # agent creation
 agent = Agent(

@@ -2,7 +2,7 @@ import json
 import logging
 import uuid
 from typing import Callable, Literal
-from tono.base import CompletionClient
+from tono.lib.base import CompletionClient
 from tono.lib import logger, get_input_panel, parse_docstring
 
 
