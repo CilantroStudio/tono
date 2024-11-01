@@ -20,7 +20,19 @@ Tono is a framework for building autonomous AI agents.
 You can install Tono using pip:
 
 ```bash
-pip install tono-ai
+pip install tono-ai[all]
+``` 
+
+If you only want to use the OpenAI models, run:
+
+```bash
+pip install tono-ai[openai]
+```
+
+Alternatively, if you would only like to use the Anthropic models, run:
+
+```bash
+pip install tono-ai[anthropic]
 ```
 
 ## Quickstart
@@ -29,12 +41,13 @@ Here is a simple example of how to use Tono to build an autonomous AI agent:
 
 ```python
 import openai
-from tono import Agent, OpenAICompletionClient
+from tono import Agent
+from tono.models.openai import CompletionClient
 from tono.tools import http_request, write_to_file
 
 
 openai_client = openai.OpenAI(api_key="your-api-key")
-client = OpenAICompletionClient(client=openai_client)
+client = CompletionClient(client=openai_client)
 
 agent = Agent(
     name="gpt-agent",

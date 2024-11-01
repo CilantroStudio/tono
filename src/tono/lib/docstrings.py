@@ -3,7 +3,7 @@ from typing_extensions import get_type_hints
 from docstring_parser import parse
 from typing import Callable, Literal, NotRequired, Optional
 from dataclasses import dataclass
-from tono.base import ToolFormatter
+from tono.lib.base import ToolFormatter
 
 
 @dataclass

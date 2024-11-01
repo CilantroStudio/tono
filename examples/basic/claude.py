@@ -1,12 +1,13 @@
 import os
 import anthropic
-from tono import Agent, AnthropicCompletionClient
+from tono import Agent
+from tono.models.anthropic import CompletionClient
 from tono.tools import http_request, write_to_file
 
 anthropic_client = anthropic.Anthropic(
     api_key=os.environ.get("ANTHROPIC_API_KEY"),
 )
-client = AnthropicCompletionClient(client=anthropic_client)
+client = CompletionClient(client=anthropic_client)
 
 # agent creation
 agent = Agent(
