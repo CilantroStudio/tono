@@ -1,5 +1,5 @@
 import typer
-from tono.lib.logging import console
+from tono.lib._logging import console
 from rich.panel import Panel
 
 

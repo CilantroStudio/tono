@@ -31,7 +31,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/tono"]
-exclude = ["tests", "docs"]
+exclude = ["src/tono/tests", "docs"]
 
 [tool.mypy]
 disable_error_code = "import-untyped"

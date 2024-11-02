@@ -1,7 +1,8 @@
-from datetime import datetime
-from tono.lib import logger, get_input_panel
-from typing import TypedDict, Unpack
 from pathlib import Path
+from datetime import datetime
+from typing import TypedDict, Unpack
+from tono.lib._logging import logger
+from tono.lib._rich import get_input_panel
 
 
 class TWriteCodeToFile(TypedDict):

@@ -3,7 +3,9 @@ import logging
 import uuid
 from typing import Callable, Literal
 from tono.lib.base import TonoCompletionClient
-from tono.lib import logger, get_input_panel, parse_docstring
+from tono.lib._rich import get_input_panel
+from tono.lib._logging import logger
+from tono.lib._docstrings import parse_docstring
 
 
 class Agent:

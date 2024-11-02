@@ -2,7 +2,8 @@ import json
 import sys
 from typing import Any, Literal
 from tono.lib.base import TonoCompletionClient
-from tono.lib import print_in_panel, logger
+from tono.lib._rich import print_in_panel
+from tono.lib._logging import logger
 from tono.models.anthropic._formatter import ToolFormatter
 from rich import print as rich_print
 
@@ -24,6 +25,9 @@ class CompletionClient(TonoCompletionClient):
         temperature: float = 0.3,
         **kwargs,
     ):
+        if not isinstance(client, anthropic.Anthropic):
+            raise TypeError("client must be an instance of anthropic.Anthropic")
+
         self.client = client
         self.model = model
         self.max_tokens = max_tokens
@@ -82,6 +86,9 @@ class CompletionClient(TonoCompletionClient):
         return " ".join(text_responses)
 
     def format_message(self, message: str, role=Literal["user", "assistant"]) -> dict:
+        if role not in ["user", "assistant"]:
+            raise ValueError("role must be either 'user' or 'assistant'")
+
         return {"role": role, "content": str(message)}
 
     def log_completion(self, response: str):

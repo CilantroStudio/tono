@@ -1,7 +1,8 @@
 import sys
 import json
 from typing import Any, Literal
-from tono.lib import print_in_panel, logger
+from tono.lib._rich import print_in_panel
+from tono.lib._logging import logger
 from tono.lib.base import TonoCompletionClient
 from tono.models.openai._formatter import ToolFormatter
 from rich import print as rich_print
@@ -23,7 +24,6 @@ class CompletionClient(TonoCompletionClient):
         temperature: float = 0.3,
         **kwargs,
     ):
-        # Assert that the client is an instance of openai.OpenAI
         if not isinstance(client, openai.OpenAI):
             raise TypeError("client must be an instance of openai.OpenAI")
 
@@ -80,6 +80,9 @@ class CompletionClient(TonoCompletionClient):
         return json.loads(response)["choices"][0]["message"]["content"]
 
     def format_message(self, message: str, role=Literal["user", "assistant"]) -> dict:
+        if role not in ["user", "assistant"]:
+            raise ValueError("role must be either 'user' or 'assistant'")
+
         return {"role": role, "content": str(message)}
 
     def log_completion(self, response: str):
