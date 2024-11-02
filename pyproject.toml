@@ -18,6 +18,9 @@ package = true
 override-dependencies = ["greenlet==3.1.0"]
 dev-dependencies = ["pytest"]
 
+[tool.pytest.ini_options]
+minversion = "8.0"
+
 [project.scripts]
 tono = "tono.cli:app"
 
@@ -48,5 +51,5 @@ module = [
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = ["tono.tests.*"]
+module = ["tests.*"]
 ignore_errors = true

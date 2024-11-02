@@ -43,4 +43,4 @@ jobs:
 
       - name: Pytest
         run: |
-          uvx pytest
+          python -m pytest
