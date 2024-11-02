@@ -1,17 +1,16 @@
-from typing import Optional, Literal
-from tono.lib import logger
+from typing import Optional, Literal, Unpack, Mapping, Any, TypedDict
 from bs4 import BeautifulSoup
 import httpx
 
 
-class THTTPRequest:
+class THTTPRequest(TypedDict):
     url: str
-    method: Literal["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"] = "GET"
-    headers: Optional[dict] = None
-    data: Optional[dict] = None
+    method: Literal["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+    headers: Optional[dict]
+    data: Optional[Mapping[str, Any]]
 
 
-def http_request(**kwargs: THTTPRequest):
+def http_request(**kwargs: Unpack[THTTPRequest]):
     """Send a HTTP request to a server and return the response.
     :param url: The URL of the server.
     :param method: The HTTP method to use. Default is GET.
@@ -21,7 +20,9 @@ def http_request(**kwargs: THTTPRequest):
     :return: The response from the server.
 
     """
-    url = kwargs.get("url")
+    url = kwargs.get("url", "")
+    if not url:
+        return "URL is required"
     method = kwargs.get("method", "GET")
     headers = kwargs.get(
         "headers",

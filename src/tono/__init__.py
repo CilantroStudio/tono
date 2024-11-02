@@ -1,4 +1,4 @@
-from tono.lib.agent import Agent  # noqa
+from tono.lib._agent import Agent  # noqa
 
 __app_name__ = "tono"
 __version__ = "0.1.1"

@@ -3,7 +3,7 @@ from typing_extensions import get_type_hints
 from docstring_parser import parse
 from typing import Callable, Literal, NotRequired, Optional
 from dataclasses import dataclass
-from tono.lib.base import ToolFormatter
+from tono.lib.base import TonoToolFormatter
 
 
 @dataclass
@@ -93,8 +93,8 @@ def analyze_typed_dict(typed_dict):
     return params
 
 
-def parse_docstring(func: Callable, formatter: ToolFormatter):
-    doc = parse(func.__doc__)
+def parse_docstring(func: Callable, formatter: TonoToolFormatter):
+    doc = parse(str(func.__doc__))
     params = analyze_kwargs_from_func(func)
 
     # update params with descriptions from docstring if available
@@ -104,13 +104,11 @@ def parse_docstring(func: Callable, formatter: ToolFormatter):
                 param["description"] = doc_param.description
 
     structured_docstring = StructuredDocstring(
-        **{
-            "name": func.__name__,
-            "short_description": doc.short_description,
-            "long_description": doc.long_description,
-            "params": [StructuredParam(**param) for param in params],
-            "required": [param["arg_name"] for param in params if param["required"]],
-        }
+        name=func.__name__,
+        short_description=doc.short_description or "",
+        long_description=doc.long_description or "",
+        params=[StructuredParam(**param) for param in params],
+        required=[param["arg_name"] for param in params if param["required"]],
     )
 
     formatted_doc = formatter.format(structured_docstring)
