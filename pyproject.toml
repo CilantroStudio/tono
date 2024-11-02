@@ -16,7 +16,7 @@ dependencies = [
 [tool.uv]
 package = true
 override-dependencies = ["greenlet==3.1.0"]
-dev-dependencies = ["pytest"]
+dev-dependencies = ["mypy>=1.13.0", "pytest>=8.3.3"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"

@@ -6,12 +6,12 @@
         {
             "label": "lint",
             "type": "shell",
-            "command": "uvx ruff check . && uvx mypy .",
+            "command": "uvx ruff check . && uv run mypy .",
         },
         {
             "label": "pytest",
             "type": "shell",
-            "command": "python -m pytest",
+            "command": "uv run pytest",
             "dependsOn": [
                 "lint"
             ]
