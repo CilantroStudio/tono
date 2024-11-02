@@ -11,7 +11,7 @@ try:
     import anthropic
 except ImportError:
     rich_print(
-        r"Please install 'tono-ai\[anthropic]' or 'tono-ai\[all]' to use the Anthropic models."
+        r"""Please run 'pip install "tono-ai\[anthropic]"' or 'pip install "tono-ai\[all]"' to use the Anthropic models."""
     )
     raise sys.exit(1)
 

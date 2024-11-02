@@ -1,7 +1,7 @@
 import os
+from tono.models.openai import CompletionClient
 import openai
 from tono import Agent
-from tono.models.openai import CompletionClient
 from tono.tools import http_request, write_to_file
 
 openai_client = openai.OpenAI(
