@@ -20,7 +20,9 @@ def http_request(**kwargs: Unpack[THTTPRequest]):
     :return: The response from the server.
 
     """
-    url = kwargs.get("url")
+    url = kwargs.get("url", "")
+    if not url:
+        return "URL is required"
     method = kwargs.get("method", "GET")
     headers = kwargs.get(
         "headers",
