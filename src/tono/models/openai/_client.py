@@ -2,7 +2,7 @@ import sys
 import json
 from typing import Any, Literal
 from tono.lib import print_in_panel, logger
-from tono.lib.base import TonoToolFormatter, TonoCompletionClient
+from tono.lib.base import TonoCompletionClient
 from tono.models.openai._formatter import ToolFormatter
 from rich import print as rich_print
 
@@ -23,13 +23,17 @@ class CompletionClient(TonoCompletionClient):
         temperature: float = 0.3,
         **kwargs,
     ):
+        # Assert that the client is an instance of openai.OpenAI
+        if not isinstance(client, openai.OpenAI):
+            raise TypeError("client must be an instance of openai.OpenAI")
+
         self.client = client
         self.model = model
         self.temperature = temperature
         self.kwargs = kwargs
 
     @property
-    def tool_formatter(self) -> TonoToolFormatter:
+    def tool_formatter(self):
         return ToolFormatter()
 
     def generate_completion(

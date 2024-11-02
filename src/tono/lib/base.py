@@ -9,7 +9,7 @@ class TonoToolFormatter(ABC):
 
 
 class TonoCompletionClient(ABC):
-    @property
+    @abstractmethod
     def tool_formatter(self) -> TonoToolFormatter:
         pass
 

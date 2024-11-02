@@ -2,14 +2,14 @@ import json
 import logging
 import uuid
 from typing import Callable, Literal
-from tono.lib.base import CompletionClient
+from tono.lib.base import TonoCompletionClient
 from tono.lib import logger, get_input_panel, parse_docstring
 
 
 class Agent:
     def __init__(
         self,
-        client: CompletionClient,
+        client: TonoCompletionClient,
         tools: list[Callable],
         context: list = [],
         name: str = "",
@@ -22,7 +22,8 @@ class Agent:
 
         # derive tool definitions from the tools
         for func in tools:
-            formatted_doc = parse_docstring(func, self.client.tool_formatter)
+            tool_formatter = self.client.tool_formatter()
+            formatted_doc = parse_docstring(func, tool_formatter)
             self.tool_definitions.append(formatted_doc)
 
         if name == "":

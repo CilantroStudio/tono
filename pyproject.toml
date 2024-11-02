@@ -16,7 +16,7 @@ dependencies = [
 [tool.uv]
 package = true
 override-dependencies = ["greenlet==3.1.0"]
-dev-dependencies = ["pytest>=8.3.3"]
+dev-dependencies = ["pytest"]
 
 [project.scripts]
 tono = "tono.cli:app"
@@ -31,3 +31,19 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/tono"]
+exclude = ["tests", "docs"]
+
+[tool.mypy]
+disable_error_code = "import-untyped"
+
+
+[[tool.mypy.overrides]]
+module = [
+    "openai.*",
+    "anthropic.*",
+    "rich.*",
+    "typer.*",
+    "httpx.*",
+    "docstring_parser.*",
+]
+ignore_missing_imports = true

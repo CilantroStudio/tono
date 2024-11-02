@@ -3,7 +3,7 @@ from typing_extensions import get_type_hints
 from docstring_parser import parse
 from typing import Callable, Literal, NotRequired, Optional
 from dataclasses import dataclass
-from tono.lib.base import ToolFormatter
+from tono.lib.base import TonoToolFormatter
 
 
 @dataclass
@@ -93,7 +93,7 @@ def analyze_typed_dict(typed_dict):
     return params
 
 
-def parse_docstring(func: Callable, formatter: ToolFormatter):
+def parse_docstring(func: Callable, formatter: TonoToolFormatter):
     doc = parse(func.__doc__)
     params = analyze_kwargs_from_func(func)
 

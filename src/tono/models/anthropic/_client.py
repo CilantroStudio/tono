@@ -1,7 +1,7 @@
 import json
 import sys
 from typing import Any, Literal
-from tono.lib.base import TonoToolFormatter, TonoCompletionClient
+from tono.lib.base import TonoCompletionClient
 from tono.lib import print_in_panel, logger
 from tono.models.anthropic._formatter import ToolFormatter
 from rich import print as rich_print
@@ -31,7 +31,7 @@ class CompletionClient(TonoCompletionClient):
         self.kwargs = kwargs
 
     @property
-    def tool_formatter(self) -> TonoToolFormatter:
+    def tool_formatter(self):
         return ToolFormatter()
 
     def generate_completion(
