@@ -36,7 +36,6 @@ exclude = ["src/tono/tests", "docs"]
 [tool.mypy]
 disable_error_code = "import-untyped"
 
-
 [[tool.mypy.overrides]]
 module = [
     "openai.*",
@@ -47,3 +46,7 @@ module = [
     "docstring_parser.*",
 ]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["tono.tests.*"]
+ignore_errors = true
