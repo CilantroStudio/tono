@@ -12,12 +12,15 @@ class THTTPRequest(TypedDict):
 
 def http_request(**kwargs: Unpack[THTTPRequest]):
     """Send a HTTP request to a server and return the response.
-    :param url: The URL of the server.
-    :param method: The HTTP method to use. Default is GET.
-    :param headers: The headers to send with the request.
-    :param data: The data to send with the request.
 
-    :return: The response from the server.
+    Parameters:
+        url (str): The URL of the server.
+        method (Literal["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]): The HTTP method to use. Default is GET.
+        headers (Optional[dict]): The headers to send with the request.
+        data (Mapping[str, Any]): The data to send with the request.
+
+    Returns:
+        (str): The response from the server.
 
     """
     url = kwargs.get("url", "")

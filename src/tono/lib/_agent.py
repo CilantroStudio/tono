@@ -9,6 +9,8 @@ from tono.lib._docstrings import parse_docstring
 
 
 class Agent:
+    """The automators agent class"""
+
     def __init__(
         self,
         client: TonoCompletionClient,

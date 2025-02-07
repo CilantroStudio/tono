@@ -1,0 +1,131 @@
+# Heavily inspired by the Typer docs
+# See https://github.com/fastapi/typer/blob/master/mkdocs.yml
+
+site_name: Tono
+site_description: Tono is a framework for building autonomous AI agents. 
+site_url: https://tono.sh/
+site_author: RatulMaharaj
+
+repo_url: https://github.com/CilantroStudio/tono
+repo_name: CilantroStudio/tono
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - API Reference:
+      - Agent: api/agent.md
+      - Tools: api/tools.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/CilantroStudio
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/cilantro-studio/
+
+
+theme:
+  name: material
+  palette:
+  - media: "(prefers-color-scheme)"
+    toggle:
+      icon: material/lightbulb-auto
+      name: Switch to light mode
+
+  - media: '(prefers-color-scheme: light)'
+    scheme: default
+    primary: black
+    accent: teal
+    toggle:
+      icon: material/lightbulb
+      name: Switch to dark mode
+
+  - media: '(prefers-color-scheme: dark)'
+    scheme: slate
+    primary: black
+    accent: teal
+    toggle:
+      icon: material/lightbulb-outline
+      name: Switch to system preference
+
+  features:
+  - content.code.annotate
+  - content.code.copy
+  - content.footnote.tooltips
+  - content.tabs.link
+  - content.tooltips
+  - navigation.footer
+  - navigation.indexes
+  - navigation.instant
+  - navigation.instant.prefetch
+  - navigation.instant.progress
+  - navigation.path
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - navigation.top
+  - navigation.tracking
+  - search.highlight
+  - search.share
+  - search.suggest
+  - toc.follow
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            docstring_section_style: table
+            show_source: true
+            show_bases: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_symbol_type_heading: true
+            merge_init_into_class: true
+
+markdown_extensions:
+  # Python Markdown
+  abbr:
+  attr_list:
+  footnotes:
+  md_in_html:
+  tables:
+  toc:
+    permalink: true
+
+  # Python Markdown Extensions
+  pymdownx.betterem:
+    smart_enable: all
+  pymdownx.caret:
+  pymdownx.highlight:
+    line_spans: __span
+  pymdownx.inlinehilite:
+  pymdownx.keys:
+  pymdownx.mark:
+  pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format
+  pymdownx.tilde:
+
+  # pymdownx blocks
+  pymdownx.blocks.admonition:
+    types:
+    - note
+    - attention
+    - caution
+    - danger
+    - error
+    - tip
+    - hint
+    - warning
+    # Custom types
+    - info
+    - check
+  pymdownx.blocks.details:
+  pymdownx.blocks.tab:
+    alternate_style: True
