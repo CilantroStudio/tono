@@ -626,7 +626,7 @@ wheels = [
 ]
 
 [[package]]
-name = "tono-ai"
+name = "tono"
 version = "0.1.2"
 source = { editable = "." }
 dependencies = [
