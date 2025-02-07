@@ -1,6 +1,6 @@
 # Tono
 
-[![image](https://img.shields.io/pypi/v/tono-ai.svg)](https://pypi.python.org/pypi/tono-ai)
+[![image](https://img.shields.io/pypi/v/tono.svg)](https://pypi.python.org/pypi/tono)
 ![GitHub License](https://img.shields.io/github/license/CilantroStudio/tono)
 [![Build](https://github.com/CilantroStudio/tono/actions/workflows/build.yaml/badge.svg)](https://github.com/CilantroStudio/tono/actions/workflows/build.yaml)
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?logo=discord&logoColor=white)](https://discord.gg/954vZeZ4)
@@ -20,19 +20,19 @@ Tono is a framework for building autonomous AI agents.
 You can install Tono using pip:
 
 ```bash
-pip install "tono-ai[all]"
+pip install "tono[all]"
 ``` 
 
 If you only want to use the OpenAI models, run:
 
 ```bash
-pip install "tono-ai[openai]"
+pip install "tono[openai]"
 ```
 
 Alternatively, if you would only like to use the Anthropic models, run:
 
 ```bash
-pip install "tono-ai[anthropic]"
+pip install "tono[anthropic]"
 ```
 
 ## Quickstart

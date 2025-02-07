@@ -11,7 +11,7 @@ try:
     import openai
 except ImportError:
     rich_print(
-        r"""Please run 'pip install "tono-ai\[openai]"' or 'pip install "tono-ai\[all]"' to use the OpenAI models."""
+        r"""Please run 'pip install "tono\[openai]"' or 'pip install "tono\[all]"' to use the OpenAI models."""
     )
     raise sys.exit(1)
 
